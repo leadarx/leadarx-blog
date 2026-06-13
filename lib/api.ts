@@ -1,6 +1,6 @@
 import type { Post, PostCard, PostList, Category, Tag, SitemapEntry, SortOption } from './types';
 
-const API = process.env.NEXT_PUBLIC_API_URL ?? 'https://leadarx.com/api';
+const API = process.env.NEXT_PUBLIC_API_URL ?? 'https://admin.leadarx.com/api';
 
 async function apiFetch<T>(endpoint: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${API}${endpoint}`, {
