@@ -1,0 +1,79 @@
+import type { Metadata } from 'next';
+import { Inter, Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
+import '@/styles/globals.css';
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+});
+
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-jakarta',
+  display: 'swap',
+});
+
+const mono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
+});
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://blog.leadarx.com';
+
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: 'Leadarx Blog: Data Analysis, UI/UX Design and Digital Marketing Insights for Nigerians',
+    template: '%s | Leadarx Blog',
+  },
+  description:
+    'Practical tech career insights for Nigerians. Learn Data Analysis, UI/UX Design and Digital Marketing. Grow your career with Leadarx Academy.',
+  keywords: [
+    'data analysis Nigeria',
+    'tech skills Nigeria',
+    'Leadarx blog',
+    'data analyst career Nigeria',
+    'UI/UX design Nigeria',
+    'digital marketing Nigeria',
+    'tech academy Nigeria',
+    'learn data analysis',
+    'Power BI Nigeria',
+    'Excel Nigeria',
+  ],
+  authors: [{ name: 'Leadarx Academy' }],
+  creator: 'Leadarx Academy',
+  publisher: 'Leadarx Academy',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-video-preview': -1, 'max-image-preview': 'large', 'max-snippet': -1 },
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_NG',
+    url: SITE_URL,
+    siteName: 'Leadarx Blog',
+    images: [{ url: '/og-default.jpg', width: 1200, height: 630, alt: 'Leadarx Blog' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@leadarxhq',
+    creator: '@leadarxhq',
+  },
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" className={`${inter.variable} ${jakarta.variable} ${mono.variable}`}>
+      <body className="bg-[#1C1C1C] text-brand-light antialiased">
+        <Navbar />
+        <main className="pt-16">{children}</main>
+        <Footer />
+      </body>
+    </html>
+  );
+}
