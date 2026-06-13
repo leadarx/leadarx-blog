@@ -20,23 +20,64 @@ interface Props {
   searchParams: Promise<{ page?: string; category?: string }>;
 }
 
+// ── Post grid — separate async component so Suspense can stream it ─────────────
+
+const emptyPostList = {
+  data: [],
+  links: { first: '', last: '', prev: null, next: null },
+  meta: { current_page: 1, from: 0, last_page: 1, per_page: 9, to: 0, total: 0 },
+};
+
+async function PostGrid({ page, category }: { page: number; category?: string }) {
+  const posts = await getPosts({ page, category, per_page: 9 }).catch(() => emptyPostList);
+
+  if (posts.data.length === 0) {
+    return (
+      <div className="text-center py-20 text-brand-grey">
+        <p className="text-xl">No articles found.</p>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {posts.data.map((post) => (
+          <PostCard key={post.uuid} post={post} />
+        ))}
+      </div>
+      {posts.meta.last_page > 1 && (
+        <div className="mt-12">
+          <Pagination meta={posts.meta} category={category} />
+        </div>
+      )}
+    </>
+  );
+}
+
+function PostGridSkeleton() {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {Array.from({ length: 9 }).map((_, i) => (
+        <SkeletonCard key={i} />
+      ))}
+    </div>
+  );
+}
+
+// ── Page ───────────────────────────────────────────────────────────────────────
+
 export default async function BlogHomePage({ searchParams }: Props) {
   const { page: pageParam, category } = await searchParams;
   const page = parseInt(pageParam ?? '1', 10);
 
-  const emptyPostList = {
-    data: [],
-    links: { first: '', last: '', prev: null, next: null },
-    meta: { current_page: 1, from: 0, last_page: 1, per_page: 9, to: 0, total: 0 },
-  };
-
-  const [featured, categories, posts] = await Promise.all([
+  // Fast cached calls — render hero + filter immediately
+  const [featured, categories] = await Promise.all([
     getFeaturedPosts().catch(() => []),
     getCategories().catch(() => []),
-    getPosts({ page, category, per_page: 9 }).catch(() => emptyPostList),
   ]);
 
-  const heroPost = featured[0] ?? posts.data[0] ?? null;
+  const heroPost = featured[0] ?? null;
 
   return (
     <>
@@ -56,20 +97,24 @@ export default async function BlogHomePage({ searchParams }: Props) {
           </h1>
 
           <p className="text-brand-grey text-base sm:text-lg max-w-2xl leading-relaxed mb-8">
-            Nigeria's tech career and news hub. Practical guides, industry updates, and resources covering Data Analysis, UI/UX Design, Digital Marketing, and other tech-related career paths.
+            Nigeria&apos;s tech career and news hub. Practical guides, industry updates, and resources covering Data Analysis, UI/UX Design, Digital Marketing, and other tech-related career paths.
           </p>
 
           {categories.length > 0 && (
             <div className="flex flex-wrap gap-2">
-              {categories.filter(cat => ['data-analysis','career-tips','industry-insights','tech-news'].includes(cat.slug)).map((cat) => (
-                <a
-                  key={cat.slug}
-                  href={`/categories/${cat.slug}`}
-                  className="px-4 py-1.5 rounded-full border border-brand-border text-brand-grey text-xs font-medium hover:border-brand-accent hover:text-brand-accent transition-colors duration-150"
-                >
-                  {cat.name}
-                </a>
-              ))}
+              {categories
+                .filter((cat) =>
+                  ['data-analysis', 'career-tips', 'industry-insights', 'tech-news'].includes(cat.slug)
+                )
+                .map((cat) => (
+                  <a
+                    key={cat.slug}
+                    href={`/categories/${cat.slug}`}
+                    className="px-4 py-1.5 rounded-full border border-brand-border text-brand-grey text-xs font-medium hover:border-brand-accent hover:text-brand-accent transition-colors duration-150"
+                  >
+                    {cat.name}
+                  </a>
+                ))}
             </div>
           )}
         </div>
@@ -82,30 +127,16 @@ export default async function BlogHomePage({ searchParams }: Props) {
         </section>
       )}
 
-      {/* Category filter */}
+      {/* Category filter — renders immediately, no wait */}
       <section className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-20 pb-8">
         <CategoryFilter categories={categories} active={category} />
       </section>
 
-      {/* Post grid */}
+      {/* Post grid — streams in; shows skeleton on category/page change */}
       <section className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-20 pb-16">
-        {posts.data.length === 0 ? (
-          <div className="text-center py-20 text-brand-grey">
-            <p className="text-xl">No articles found.</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {posts.data.map((post) => (
-              <PostCard key={post.uuid} post={post} />
-            ))}
-          </div>
-        )}
-
-        {posts.meta.last_page > 1 && (
-          <div className="mt-12">
-            <Pagination meta={posts.meta} category={category} />
-          </div>
-        )}
+        <Suspense key={`${category ?? 'all'}-${page}`} fallback={<PostGridSkeleton />}>
+          <PostGrid page={page} category={category} />
+        </Suspense>
       </section>
 
       {/* Enrollment CTA */}

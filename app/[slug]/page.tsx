@@ -68,12 +68,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PostPage({ params }: Props) {
   const { slug } = await params;
-  let post;
-  try {
-    post = await getPost(slug);
-  } catch {
-    notFound();
-  }
+
+  const post = await getPost(slug).catch(() => null);
+  if (!post) notFound();
 
   const SITE    = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://blog.leadarx.com';
   const postUrl = `${SITE}/${post.slug}`;
