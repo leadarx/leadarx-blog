@@ -28,15 +28,15 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://blog.leadarx.com';
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Leadarx Blog: Data Analysis, UI/UX Design and Digital Marketing Insights for Nigerians',
-    template: '%s | Leadarx Blog',
+    default: 'LeadarX Blog: Data Analysis, UI/UX Design and Digital Marketing Insights for Nigerians',
+    template: '%s | LeadarX Blog',
   },
   description:
-    'Practical tech career insights for Nigerians. Learn Data Analysis, UI/UX Design and Digital Marketing. Grow your career with Leadarx Academy.',
+    "Nigeria's tech career and news hub. Practical guides, industry updates, and resources covering Data Analysis, UI/UX Design, Digital Marketing, and other tech-related career paths.",
   keywords: [
     'data analysis Nigeria',
     'tech skills Nigeria',
-    'Leadarx blog',
+    'LeadarX blog',
     'data analyst career Nigeria',
     'UI/UX design Nigeria',
     'digital marketing Nigeria',
@@ -45,9 +45,9 @@ export const metadata: Metadata = {
     'Power BI Nigeria',
     'Excel Nigeria',
   ],
-  authors: [{ name: 'Leadarx Academy' }],
-  creator: 'Leadarx Academy',
-  publisher: 'Leadarx Academy',
+  authors: [{ name: 'LeadarX Academy' }],
+  creator: 'LeadarX Academy',
+  publisher: 'LeadarX Academy',
   robots: {
     index: true,
     follow: true,
@@ -57,8 +57,8 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_NG',
     url: SITE_URL,
-    siteName: 'Leadarx Blog',
-    images: [{ url: '/og-default.jpg', width: 1200, height: 630, alt: 'Leadarx Blog' }],
+    siteName: 'LeadarX Blog',
+    images: [{ url: '/og-default.jpg', width: 1200, height: 630, alt: 'LeadarX Blog' }],
   },
   twitter: {
     card: 'summary_large_image',

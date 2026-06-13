@@ -5,7 +5,7 @@ interface Props {
 }
 
 export default function EnrollmentCTA({ variant = 'banner', categoryColor, heading }: Props) {
-  const ENROLL_URL = `${process.env.NEXT_PUBLIC_MAIN_SITE_URL ?? 'https://leadarx.com'}/enroll`;
+  const ENROLL_URL = process.env.NEXT_PUBLIC_MAIN_SITE_URL ?? 'https://leadarx.com';
   const MAIN_URL   = process.env.NEXT_PUBLIC_MAIN_SITE_URL ?? 'https://leadarx.com';
 
   if (variant === 'sidebar') {
@@ -21,7 +21,7 @@ export default function EnrollmentCTA({ variant = 'banner', categoryColor, headi
         <p className="text-[#1C1C1C] font-bold text-sm mb-4">Starting at &#x20A6;45,000</p>
         <a
           href={ENROLL_URL}
-          className="block bg-[#1C1C1C] text-brand-light font-bold py-3 rounded-lg text-sm hover:opacity-90 transition-opacity"
+          className="block bg-white text-[#1C1C1C] font-bold py-3 rounded-lg text-sm hover:opacity-90 transition-opacity"
         >
           Enroll Now
         </a>
@@ -42,7 +42,7 @@ export default function EnrollmentCTA({ variant = 'banner', categoryColor, headi
         </p>
         <a
           href={ENROLL_URL}
-          className="inline-block bg-[#1C1C1C] text-brand-light font-bold px-8 py-3 rounded-lg hover:opacity-90 transition-opacity"
+          className="inline-block bg-white text-[#1C1C1C] font-bold px-8 py-3 rounded-lg hover:opacity-90 transition-opacity"
         >
           Enroll Now
         </a>
@@ -63,7 +63,7 @@ export default function EnrollmentCTA({ variant = 'banner', categoryColor, headi
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
             href={ENROLL_URL}
-            className="inline-flex items-center justify-center bg-[#1C1C1C] text-brand-light font-bold px-8 py-4 rounded-xl hover:opacity-90 transition-opacity text-lg"
+            className="inline-flex items-center justify-center bg-white text-[#1C1C1C] font-bold px-8 py-4 rounded-xl hover:opacity-90 transition-opacity text-lg"
           >
             Enroll Now
           </a>

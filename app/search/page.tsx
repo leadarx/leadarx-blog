@@ -5,7 +5,7 @@ import { SkeletonCard } from '@/components/ui/Skeleton';
 
 export const metadata = {
   title: 'Search Articles',
-  description: 'Search through all Leadarx Blog articles on Data Analysis, UI/UX Design and Digital Marketing.',
+  description: 'Search through all LeadarX Blog articles on Data Analysis, UI/UX Design and Digital Marketing.',
 };
 
 function SearchFallback() {

@@ -47,6 +47,7 @@ export interface Post extends PostCard {
   og_image: string | null;
   canonical_url: string;
   noindex: boolean;
+  show_author: boolean;
   updated_at: string;
   related_posts: PostCard[];
 }

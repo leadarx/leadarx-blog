@@ -9,6 +9,7 @@ interface Props {
   excerpt?: string;
   image?: string;
   sticky?: boolean;
+  compact?: boolean;
 }
 
 function ShareIcon() {
@@ -19,7 +20,7 @@ function ShareIcon() {
   );
 }
 
-export default function ShareButtons({ url, title, excerpt, image, sticky }: Props) {
+export default function ShareButtons({ url, title, excerpt, image, sticky, compact }: Props) {
   const [open, setOpen]           = useState(false);
   const [copied, setCopied]       = useState(false);
   const [hasNative, setHasNative] = useState(false);
@@ -94,7 +95,7 @@ export default function ShareButtons({ url, title, excerpt, image, sticky }: Pro
               <div className="w-4 h-4 rounded bg-brand-accent flex items-center justify-center flex-shrink-0">
                 <span className="text-white font-black" style={{ fontSize: 8 }}>L</span>
               </div>
-              <span className="text-brand-grey text-xs">Leadarx Blog</span>
+              <span className="text-brand-grey text-xs">LeadarX Blog</span>
             </div>
           </div>
         </div>
@@ -165,6 +166,21 @@ export default function ShareButtons({ url, title, excerpt, image, sticky }: Pro
       </div>
     </div>
   );
+
+  if (compact) {
+    return (
+      <>
+        <button
+          onClick={() => setOpen(true)}
+          className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full border border-brand-border text-brand-grey hover:border-brand-accent hover:text-brand-accent transition-colors duration-150"
+          aria-label="Share this article"
+        >
+          <ShareIcon />
+        </button>
+        {open && modal}
+      </>
+    );
+  }
 
   if (sticky) {
     return (

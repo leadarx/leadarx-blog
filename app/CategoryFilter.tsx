@@ -13,6 +13,7 @@ export default function CategoryFilter({ categories, active }: Props) {
     <div className="flex gap-3 overflow-x-auto no-scrollbar pb-2">
       <Link
         href="/"
+        scroll={false}
         className={`flex-shrink-0 px-5 py-2.5 rounded-full text-sm font-semibold transition-colors ${
           !active
             ? 'bg-brand-accent text-white'
@@ -27,6 +28,7 @@ export default function CategoryFilter({ categories, active }: Props) {
           <Link
             key={cat.slug}
             href={`/?category=${cat.slug}`}
+            scroll={false}
             className={`flex-shrink-0 px-5 py-2.5 rounded-full text-sm font-semibold transition-colors ${
               isActive
                 ? 'text-white'

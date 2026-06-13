@@ -59,12 +59,13 @@ export function addHeadingIds(html: string): string {
 
 export function injectEnrollmentCta(html: string, categoryColor?: string): string {
   const bg = categoryColor || '#D96C4A';
+  const mainUrl = process.env.NEXT_PUBLIC_MAIN_SITE_URL ?? 'https://leadarx.com';
   const cta = `
 <div class="enrollment-cta-inline" style="background:${bg};border-radius:12px;padding:28px 32px;margin:40px 0;text-align:center;">
   <p style="color:#1C1C1C;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">Ready to go further?</p>
   <h3 style="color:#1C1C1C;font-size:22px;font-weight:700;margin-bottom:12px;line-height:1.3;">Master these skills in 10 weeks</h3>
   <p style="color:rgba(28,28,28,0.8);margin-bottom:20px;font-size:15px;">Our certified Data Analysis program covers everything in this article and more. Live instructors. Real projects. Job support.</p>
-  <a href="https://leadarx.com/enroll" style="display:inline-block;background:#1C1C1C;color:#EAEAE4;padding:12px 28px;border-radius:8px;font-weight:600;font-size:15px;text-decoration:none;">Enroll Now</a>
+  <a href="${mainUrl}" style="display:inline-block;background:#ffffff;color:#1C1C1C;padding:12px 28px;border-radius:8px;font-weight:600;font-size:15px;text-decoration:none;">Enroll Now</a>
 </div>`;
 
   const paragraphs = html.split('</p>');

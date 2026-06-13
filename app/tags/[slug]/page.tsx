@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const tag = slug.replace(/-/g, ' ');
   return {
     title: `#${tag} Articles`,
-    description: `Browse all articles tagged with ${tag} on the Leadarx Blog.`,
+    description: `Browse all articles tagged with ${tag} on the LeadarX Blog.`,
   };
 }
 

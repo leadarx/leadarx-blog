@@ -16,7 +16,7 @@ export async function GET(): Promise<Response> {
 
   const items = posts
     .map((post) => {
-      const url = `${SITE}/posts/${post.slug}`;
+      const url = `${SITE}/${post.slug}`;
       const date = post.published_at ? new Date(post.published_at).toUTCString() : new Date().toUTCString();
       return `
     <item>
@@ -38,17 +38,17 @@ export async function GET(): Promise<Response> {
   xmlns:content="http://purl.org/rss/1.0/modules/content/"
   xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Leadarx Blog</title>
+    <title>LeadarX Blog</title>
     <link>${SITE}</link>
     <description>Data Analysis, UI/UX Design and Digital Marketing insights for Nigerians.</description>
     <language>en-ng</language>
-    <managingEditor>support@leadarx.com (Leadarx Academy)</managingEditor>
-    <webMaster>support@leadarx.com (Leadarx Academy)</webMaster>
+    <managingEditor>support@leadarx.com (LeadarX Academy)</managingEditor>
+    <webMaster>support@leadarx.com (LeadarX Academy)</webMaster>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <atom:link href="${SITE}/feed.xml" rel="self" type="application/rss+xml"/>
     <image>
       <url>${MAIN}/logo.png</url>
-      <title>Leadarx Blog</title>
+      <title>LeadarX Blog</title>
       <link>${SITE}</link>
     </image>
     ${items}

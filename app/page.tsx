@@ -13,7 +13,7 @@ export const revalidate = 300;
 export const metadata: Metadata = {
   title: 'Blog: Data Analysis, UI/UX and Digital Marketing Articles',
   description:
-    'Read practical articles on Data Analysis, UI/UX Design and Digital Marketing. Written for Nigerians building tech careers with Leadarx Academy.',
+    "Nigeria's tech career and news hub. Practical guides, industry updates, and resources covering Data Analysis, UI/UX Design, Digital Marketing, and other tech-related career paths.",
 };
 
 interface Props {
@@ -41,19 +41,54 @@ export default async function BlogHomePage({ searchParams }: Props) {
   return (
     <>
       {/* Hero */}
+      <section className="border-b border-brand-border">
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-20 pt-24 pb-14">
+
+          <p className="text-[11px] font-bold tracking-[0.18em] uppercase text-brand-grey mb-5">
+            Est. 2024 · Nigeria
+          </p>
+
+          <h1
+            className="font-heading font-bold text-brand-light leading-[1.08] tracking-[-0.03em] text-balance mb-6"
+            style={{ fontSize: 'clamp(44px, 8vw, 96px)' }}
+          >
+            LeadarX Blog
+          </h1>
+
+          <p className="text-brand-grey text-base sm:text-lg max-w-2xl leading-relaxed mb-8">
+            Nigeria's tech career and news hub. Practical guides, industry updates, and resources covering Data Analysis, UI/UX Design, Digital Marketing, and other tech-related career paths.
+          </p>
+
+          {categories.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {categories.filter(cat => ['data-analysis','career-tips','industry-insights','tech-news'].includes(cat.slug)).map((cat) => (
+                <a
+                  key={cat.slug}
+                  href={`/categories/${cat.slug}`}
+                  className="px-4 py-1.5 rounded-full border border-brand-border text-brand-grey text-xs font-medium hover:border-brand-accent hover:text-brand-accent transition-colors duration-150"
+                >
+                  {cat.name}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Featured post */}
       {heroPost && (
-        <section className="max-w-7xl mx-auto px-6 pt-10 pb-12">
+        <section className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-20 pt-12 pb-10">
           <PostCardFeatured post={heroPost} />
         </section>
       )}
 
       {/* Category filter */}
-      <section className="max-w-7xl mx-auto px-6 pb-8">
+      <section className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-20 pb-8">
         <CategoryFilter categories={categories} active={category} />
       </section>
 
       {/* Post grid */}
-      <section className="max-w-7xl mx-auto px-6 pb-16">
+      <section className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-20 pb-16">
         {posts.data.length === 0 ? (
           <div className="text-center py-20 text-brand-grey">
             <p className="text-xl">No articles found.</p>

@@ -46,7 +46,7 @@ export default function MobileMenu({ open, onClose, links }: Props) {
         </nav>
 
         <Link
-          href="https://leadarx.com/enroll"
+          href="https://leadarx.com"
           onClick={onClose}
           className="mt-8 bg-brand-accent text-white font-bold py-4 rounded-xl text-center text-lg hover:opacity-90 transition-opacity"
         >

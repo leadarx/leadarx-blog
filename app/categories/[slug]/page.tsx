@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation';
 import { getCategoryWithPosts, getCategories } from '@/lib/api';
 import PostCard from '@/components/blog/PostCard';
 import EnrollmentCTA from '@/components/blog/EnrollmentCTA';
-import Pagination from '@/app/Pagination';
 
 export const revalidate = 300;
 
@@ -29,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `${category.name} Articles`,
       description:
         category.meta_description ||
-        `Browse all ${category.name} articles on the Leadarx Blog.`,
+        `Browse all ${category.name} articles on the LeadarX Blog.`,
     };
   } catch {
     return { title: 'Category not found' };
@@ -68,24 +67,18 @@ export default async function CategoryPage({ params, searchParams }: Props) {
           {category.description && (
             <p className="text-brand-grey text-lg leading-relaxed">{category.description}</p>
           )}
-          <p className="text-brand-grey text-sm mt-3">{category.post_count ?? posts.meta.total} articles</p>
+          <p className="text-brand-grey text-sm mt-3">{category.post_count ?? posts.length} articles</p>
         </div>
       </section>
 
       <section className="max-w-7xl mx-auto px-6 pb-16">
-        {posts.data.length === 0 ? (
+        {posts.length === 0 ? (
           <p className="text-brand-grey py-20 text-center">No articles in this category yet.</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {posts.data.map((post) => (
+            {posts.map((post) => (
               <PostCard key={post.uuid} post={post} />
             ))}
-          </div>
-        )}
-
-        {posts.meta.last_page > 1 && (
-          <div className="mt-12">
-            <Pagination meta={posts.meta} basePath={`/categories/${slug}`} />
           </div>
         )}
       </section>

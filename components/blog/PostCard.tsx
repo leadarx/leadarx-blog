@@ -10,7 +10,7 @@ interface Props {
 export default function PostCard({ post }: Props) {
   return (
     <Link
-      href={`/posts/${post.slug}`}
+      href={`/${post.slug}`}
       className="group block bg-brand-card border border-brand-border rounded-xl overflow-hidden hover:border-brand-accent/40 hover:-translate-y-0.5 transition-all duration-200"
     >
       {/* Featured image */}

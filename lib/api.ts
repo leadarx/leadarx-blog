@@ -70,14 +70,14 @@ export async function getPostPreview(slug: string, token: string): Promise<Post>
 // ── Categories ────────────────────────────────────────────────────────────────
 
 export async function getCategories(): Promise<Category[]> {
-  const res = await apiFetch<{ data: Category[] }>('/blog/categories', { next: { revalidate: 3600 } });
+  const res = await apiFetch<{ data: Category[] }>('/blog/categories', { cache: 'no-store' });
   return res.data ?? [];
 }
 
 export async function getCategoryWithPosts(
   slug: string,
   page = 1
-): Promise<{ category: Category; posts: PostList }> {
+): Promise<{ category: Category; posts: PostCard[] }> {
   return apiFetch(`/blog/categories/${slug}?page=${page}`, { next: { revalidate: 300 } });
 }
 
