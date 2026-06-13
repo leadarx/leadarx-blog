@@ -11,7 +11,7 @@ export default function PostCard({ post }: Props) {
   return (
     <Link
       href={`/posts/${post.slug}`}
-      className="group block bg-[#242424] border border-brand-border rounded-xl overflow-hidden hover:border-brand-accent/40 hover:-translate-y-0.5 transition-all duration-200"
+      className="group block bg-brand-card border border-brand-border rounded-xl overflow-hidden hover:border-brand-accent/40 hover:-translate-y-0.5 transition-all duration-200"
     >
       {/* Featured image */}
       <div className="aspect-video overflow-hidden bg-brand-border">
@@ -34,7 +34,7 @@ export default function PostCard({ post }: Props) {
 
       {/* Content */}
       <div className="p-5">
-        <CategoryBadge category={post.category} className="mb-3" />
+        <CategoryBadge category={post.category} className="mb-3" linked={false} />
 
         <h3 className="font-heading font-bold text-brand-light text-lg leading-snug line-clamp-2 mb-2 group-hover:text-brand-accent transition-colors">
           {post.title}
@@ -44,18 +44,10 @@ export default function PostCard({ post }: Props) {
           <p className="text-brand-grey text-sm leading-relaxed line-clamp-3 mb-4">{post.excerpt}</p>
         )}
 
-        <div className="flex items-center gap-3 pt-4 border-t border-brand-border">
-          {post.author?.avatar ? (
-            <Image src={post.author.avatar} alt={post.author.name} width={32} height={32} className="rounded-full object-cover flex-shrink-0" />
-          ) : (
-            <div className="w-8 h-8 rounded-full bg-brand-accent/20 flex items-center justify-center flex-shrink-0">
-              <span className="text-brand-accent text-xs font-bold">{post.author?.name?.[0] ?? 'L'}</span>
-            </div>
-          )}
-          <div className="flex-1 min-w-0">
-            <p className="text-brand-light text-xs font-medium truncate">{post.author?.name}</p>
-            <p className="text-brand-grey text-xs">{post.published_at_formatted} &middot; {post.reading_time}</p>
-          </div>
+        <div className="flex items-center gap-2 pt-4 border-t border-brand-border text-brand-grey text-xs">
+          <span>{post.published_at_formatted}</span>
+          <span>&middot;</span>
+          <span>{post.reading_time}</span>
         </div>
       </div>
     </Link>

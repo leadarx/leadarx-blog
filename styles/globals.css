@@ -2,15 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Theme tokens ──────────────────────────────────────────── */
+:root,
+[data-theme="dark"] {
+  --bg:         #1C1C1C;
+  --bg-card:    #242424;
+  --bg-surface: #1A1A1A;
+  --bg-footer:  #161616;
+  --border:     #2E2E2E;
+  --text:       #EAEAE4;
+  --text-muted: #9A9A94;
+}
+
+[data-theme="light"] {
+  --bg:         #F5F4EF;
+  --bg-card:    #FFFFFF;
+  --bg-surface: #ECEAE4;
+  --bg-footer:  #E6E4DE;
+  --border:     #DDDBD3;
+  --text:       #1C1C1C;
+  --text-muted: #6E6E68;
+}
+/* ─────────────────────────────────────────────────────────── */
+
 @layer base {
   *, *::before, *::after { box-sizing: border-box; }
 
   html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
   body {
-    background-color: #1C1C1C;
-    color: #EAEAE4;
+    background-color: var(--bg);
+    color: var(--text);
     font-family: var(--font-inter), system-ui, sans-serif;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 
   ::selection { background: #D96C4A; color: #1C1C1C; }

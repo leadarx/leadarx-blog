@@ -1,14 +1,17 @@
+export const dynamic = 'force-dynamic';
+
 import { getRssPosts } from '@/lib/api';
+import type { PostCard } from '@/lib/types';
 
 const SITE  = process.env.NEXT_PUBLIC_SITE_URL  ?? 'https://blog.leadarx.com';
 const MAIN  = process.env.NEXT_PUBLIC_MAIN_SITE_URL ?? 'https://leadarx.com';
 
 export async function GET(): Promise<Response> {
-  let posts;
+  let posts: PostCard[] = [];
   try {
     posts = await getRssPosts();
   } catch {
-    posts = [];
+    // silently fall through with empty posts
   }
 
   const items = posts

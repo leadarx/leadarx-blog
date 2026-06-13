@@ -14,8 +14,8 @@ export default function PostCardFeatured({ post }: Props) {
       className="group grid grid-cols-1 lg:grid-cols-5 gap-0 min-h-[420px] overflow-hidden rounded-2xl border border-brand-border hover:border-brand-accent/30 transition-colors"
     >
       {/* Left: Content */}
-      <div className="lg:col-span-3 flex flex-col justify-center p-8 lg:p-12 bg-[#1A1A1A]">
-        <CategoryBadge category={post.category} className="mb-4 self-start" />
+      <div className="lg:col-span-3 flex flex-col justify-center p-8 lg:p-12 bg-brand-surface">
+        <CategoryBadge category={post.category} className="mb-4 self-start" linked={false} />
 
         <h2 className="font-heading font-bold text-brand-light text-3xl lg:text-4xl leading-tight mb-4 group-hover:text-brand-accent transition-colors text-balance">
           {post.title}
@@ -25,18 +25,10 @@ export default function PostCardFeatured({ post }: Props) {
           <p className="text-brand-grey text-base leading-relaxed mb-6 line-clamp-3">{post.excerpt}</p>
         )}
 
-        <div className="flex items-center gap-3 mb-6">
-          {post.author?.avatar ? (
-            <Image src={post.author.avatar} alt={post.author.name} width={36} height={36} className="rounded-full object-cover" />
-          ) : (
-            <div className="w-9 h-9 rounded-full bg-brand-accent/20 flex items-center justify-center">
-              <span className="text-brand-accent text-xs font-bold">{post.author?.name?.[0] ?? 'L'}</span>
-            </div>
-          )}
-          <div>
-            <p className="text-brand-light text-sm font-medium">{post.author?.name}</p>
-            <p className="text-brand-grey text-xs">{post.published_at_formatted} &middot; {post.reading_time}</p>
-          </div>
+        <div className="flex items-center gap-2 mb-6 text-brand-grey text-xs">
+          <span>{post.published_at_formatted}</span>
+          <span>&middot;</span>
+          <span>{post.reading_time}</span>
         </div>
 
         <span className="inline-flex items-center gap-2 text-brand-accent font-semibold text-sm">

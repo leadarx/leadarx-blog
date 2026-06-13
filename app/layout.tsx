@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import { ThemeProvider } from '@/components/layout/ThemeProvider';
 import '@/styles/globals.css';
 
 const inter = Inter({
@@ -68,11 +69,21 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${jakarta.variable} ${mono.variable}`}>
-      <body className="bg-[#1C1C1C] text-brand-light antialiased">
-        <Navbar />
-        <main className="pt-16">{children}</main>
-        <Footer />
+    <html lang="en" className={`${inter.variable} ${jakarta.variable} ${mono.variable}`} data-theme="dark" suppressHydrationWarning>
+      <head>
+        {/* Anti-flash: read theme from localStorage before React hydrates */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();`,
+          }}
+        />
+      </head>
+      <body className="bg-brand-dark text-brand-light antialiased">
+        <ThemeProvider>
+          <Navbar />
+          <main className="pt-16">{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

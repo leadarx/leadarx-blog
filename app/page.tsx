@@ -17,17 +17,23 @@ export const metadata: Metadata = {
 };
 
 interface Props {
-  searchParams: { page?: string; category?: string };
+  searchParams: Promise<{ page?: string; category?: string }>;
 }
 
 export default async function BlogHomePage({ searchParams }: Props) {
-  const page     = parseInt(searchParams.page ?? '1', 10);
-  const category = searchParams.category;
+  const { page: pageParam, category } = await searchParams;
+  const page = parseInt(pageParam ?? '1', 10);
+
+  const emptyPostList = {
+    data: [],
+    links: { first: '', last: '', prev: null, next: null },
+    meta: { current_page: 1, from: 0, last_page: 1, per_page: 9, to: 0, total: 0 },
+  };
 
   const [featured, categories, posts] = await Promise.all([
-    getFeaturedPosts(),
-    getCategories(),
-    getPosts({ page, category, per_page: 9 }),
+    getFeaturedPosts().catch(() => []),
+    getCategories().catch(() => []),
+    getPosts({ page, category, per_page: 9 }).catch(() => emptyPostList),
   ]);
 
   const heroPost = featured[0] ?? posts.data[0] ?? null;

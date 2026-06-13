@@ -8,7 +8,7 @@ const SOCIALS = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#161616] border-t border-brand-border">
+    <footer className="bg-brand-footer border-t border-brand-border">
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Brand */}

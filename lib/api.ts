@@ -42,7 +42,8 @@ export async function getPosts(params?: {
 }
 
 export async function getPost(slug: string): Promise<Post> {
-  return apiFetch<Post>(`/blog/posts/${slug}`, { cache: 'no-store' });
+  const res = await apiFetch<{ data: Post }>(`/blog/posts/${slug}`, { cache: 'no-store' });
+  return res.data;
 }
 
 export async function getFeaturedPosts(): Promise<PostCard[]> {
@@ -62,7 +63,8 @@ export async function searchPosts(query: string, page = 1): Promise<PostList> {
 }
 
 export async function getPostPreview(slug: string, token: string): Promise<Post> {
-  return apiFetch<Post>(`/blog/preview/${slug}?preview_token=${token}`, { cache: 'no-store' });
+  const res = await apiFetch<{ data: Post }>(`/blog/preview/${slug}?preview_token=${token}`, { cache: 'no-store' });
+  return res.data;
 }
 
 // ── Categories ────────────────────────────────────────────────────────────────

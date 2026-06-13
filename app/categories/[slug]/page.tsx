@@ -8,8 +8,8 @@ import Pagination from '@/app/Pagination';
 export const revalidate = 300;
 
 interface Props {
-  params: { slug: string };
-  searchParams: { page?: string };
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ page?: string }>;
 }
 
 export async function generateStaticParams() {
@@ -23,7 +23,8 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
-    const { category } = await getCategoryWithPosts(params.slug);
+    const { slug } = await params;
+    const { category } = await getCategoryWithPosts(slug);
     return {
       title: `${category.name} Articles`,
       description:
@@ -36,11 +37,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function CategoryPage({ params, searchParams }: Props) {
-  const page = parseInt(searchParams.page ?? '1', 10);
+  const { slug }  = await params;
+  const { page: pageParam } = await searchParams;
+  const page = parseInt(pageParam ?? '1', 10);
 
   let data;
   try {
-    data = await getCategoryWithPosts(params.slug, page);
+    data = await getCategoryWithPosts(slug, page);
   } catch {
     notFound();
   }
@@ -82,7 +85,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 
         {posts.meta.last_page > 1 && (
           <div className="mt-12">
-            <Pagination meta={posts.meta} basePath={`/categories/${params.slug}`} />
+            <Pagination meta={posts.meta} basePath={`/categories/${slug}`} />
           </div>
         )}
       </section>

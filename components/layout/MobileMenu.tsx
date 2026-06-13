@@ -22,7 +22,7 @@ export default function MobileMenu({ open, onClose, links }: Props) {
     >
       <div className="absolute inset-0 bg-black/60" onClick={onClose} />
       <div
-        className={`absolute right-0 top-0 bottom-0 w-80 bg-[#1C1C1C] flex flex-col p-8 transition-transform duration-200 ${
+        className={`absolute right-0 top-0 bottom-0 w-80 bg-brand-dark flex flex-col p-8 border-l border-brand-border transition-transform duration-200 ${
           open ? 'translate-x-0' : 'translate-x-full'
         }`}
       >

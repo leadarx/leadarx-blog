@@ -8,12 +8,13 @@ import Pagination from '@/app/Pagination';
 export const revalidate = 300;
 
 interface Props {
-  params: { slug: string };
-  searchParams: { page?: string };
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ page?: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const tag = params.slug.replace(/-/g, ' ');
+  const { slug } = await params;
+  const tag = slug.replace(/-/g, ' ');
   return {
     title: `#${tag} Articles`,
     description: `Browse all articles tagged with ${tag} on the Leadarx Blog.`,
@@ -21,16 +22,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function TagPage({ params, searchParams }: Props) {
-  const page = parseInt(searchParams.page ?? '1', 10);
+  const { slug } = await params;
+  const { page: pageParam } = await searchParams;
+  const page = parseInt(pageParam ?? '1', 10);
 
   let posts;
   try {
-    posts = await getTagPosts(params.slug, page);
+    posts = await getTagPosts(slug, page);
   } catch {
     notFound();
   }
 
-  const tagName = params.slug.replace(/-/g, ' ');
+  const tagName = slug.replace(/-/g, ' ');
 
   return (
     <>
@@ -53,7 +56,7 @@ export default async function TagPage({ params, searchParams }: Props) {
 
         {posts.meta.last_page > 1 && (
           <div className="mt-12">
-            <Pagination meta={posts.meta} basePath={`/tags/${params.slug}`} />
+            <Pagination meta={posts.meta} basePath={`/tags/${slug}`} />
           </div>
         )}
       </section>

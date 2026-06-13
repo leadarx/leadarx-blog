@@ -1,8 +1,8 @@
-import type { PostCard } from '@/lib/types';
+import type { PostCard as PostCardType } from '@/lib/types';
 import PostCard from './PostCard';
 
 interface Props {
-  posts: PostCard[];
+  posts: PostCardType[];
 }
 
 export default function RelatedPosts({ posts }: Props) {

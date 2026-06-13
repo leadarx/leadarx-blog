@@ -12,7 +12,7 @@ import ShareButtons from '@/components/blog/ShareButtons';
 import { formatDateFull } from '@/lib/utils';
 
 interface Props {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
@@ -26,8 +26,9 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
-    const post = await getPost(params.slug);
-    const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://blog.leadarx.com';
+    const { slug } = await params;
+    const post = await getPost(slug);
+    const SITE  = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://blog.leadarx.com';
 
     return {
       title: post.meta_title || post.title,
@@ -64,14 +65,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function PostPage({ params }: Props) {
+  const { slug } = await params;
   let post;
   try {
-    post = await getPost(params.slug);
+    post = await getPost(slug);
   } catch {
     notFound();
   }
 
-  const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://blog.leadarx.com';
+  const SITE    = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://blog.leadarx.com';
   const postUrl = `${SITE}/posts/${post.slug}`;
 
   const jsonLd = {
@@ -118,46 +120,34 @@ export default async function PostPage({ params }: Props) {
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#1C1C1C]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--bg)]" />
         </div>
       )}
 
       <div className="max-w-7xl mx-auto px-6">
-        {/* Post header */}
-        <div className="max-w-3xl mx-auto pt-8 pb-10">
-          <CategoryBadge category={post.category} className="mb-4" />
-
-          <h1 className="font-heading font-bold text-brand-light text-3xl md:text-5xl leading-tight mb-6 text-balance">
-            {post.title}
-          </h1>
-
-          <div className="flex items-center gap-4 mb-5">
-            {post.author?.avatar ? (
-              <Image src={post.author.avatar} alt={post.author.name} width={40} height={40} className="rounded-full object-cover flex-shrink-0" />
-            ) : (
-              <div className="w-10 h-10 rounded-full bg-brand-accent/20 flex items-center justify-center flex-shrink-0">
-                <span className="text-brand-accent font-bold">{post.author?.name?.[0] ?? 'L'}</span>
-              </div>
-            )}
-            <div className="text-sm text-brand-grey">
-              <span className="text-brand-light font-medium">{post.author?.name}</span>
-              {' '}&middot;{' '}
-              {post.published_at && formatDateFull(post.published_at)}
-              {' '}&middot;{' '}
-              {post.reading_time}
-              {post.view_count > 0 && <>{' '}&middot;{' '}{post.view_count.toLocaleString()} views</>}
-            </div>
-          </div>
-
-          {post.tags?.length > 0 && <TagList tags={post.tags} className="mb-6" />}
-
-          <div className="border-t border-brand-border" />
-        </div>
-
-        {/* Two-column layout */}
+        {/* Two-column layout — header and body share the same left column */}
         <div className="flex gap-12 pb-16">
-          {/* Main content */}
-          <article className="flex-1 min-w-0 max-w-3xl">
+          {/* Main column: header + article */}
+          <article className="flex-1 min-w-0 pt-8">
+
+            {/* Post header */}
+            <div className="pb-10">
+              <CategoryBadge category={post.category} className="mb-4" />
+
+              <h1 className="font-heading font-bold text-brand-light text-3xl md:text-5xl leading-tight mb-6 text-balance">
+                {post.title}
+              </h1>
+
+              <div className="flex items-center gap-3 mb-5 text-sm text-brand-grey">
+                {post.published_at && <span>{formatDateFull(post.published_at)}</span>}
+                <span>&middot;</span>
+                <span>{post.reading_time}</span>
+              </div>
+
+              {post.tags?.length > 0 && <TagList tags={post.tags} className="mb-6" />}
+
+              <div className="border-t border-brand-border" />
+            </div>
             {/* Mobile TOC */}
             {post.body_html && (
               <details className="lg:hidden mb-8 bg-brand-card border border-brand-border rounded-xl p-5">
@@ -211,7 +201,12 @@ export default async function PostPage({ params }: Props) {
               <EnrollmentCTA variant="sidebar" categoryColor={post.category?.color ?? undefined} />
 
               <div className="bg-brand-card border border-brand-border rounded-xl p-6">
-                <ShareButtons url={postUrl} title={post.title} />
+                <ShareButtons
+                  url={postUrl}
+                  title={post.title}
+                  excerpt={post.excerpt ?? undefined}
+                  image={post.og_image ?? post.featured_image ?? undefined}
+                />
               </div>
             </div>
           </aside>
@@ -229,7 +224,13 @@ export default async function PostPage({ params }: Props) {
       <EnrollmentCTA variant="banner" heading="Enjoyed this article?" />
 
       {/* Sticky share bar on mobile */}
-      <ShareButtons url={postUrl} title={post.title} sticky />
+      <ShareButtons
+        url={postUrl}
+        title={post.title}
+        excerpt={post.excerpt ?? undefined}
+        image={post.og_image ?? post.featured_image ?? undefined}
+        sticky
+      />
     </>
   );
 }
