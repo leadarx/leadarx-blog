@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 const SOCIALS = [
   {
     label: 'WhatsApp',
@@ -29,7 +31,7 @@ const SOCIALS = [
   },
   {
     label: 'Facebook',
-    href: 'https://facebook.com/leadarxhq',
+    href: 'https://www.facebook.com/share/18HjeUAeZj/?mibextid=wwXIfr',
     icon: (
       <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
         <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073c0 6.022 4.388 11.01 10.125 11.927v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.532-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.269h3.328l-.532 3.49h-2.796v8.437C19.612 23.083 24 18.095 24 12.073z" />
@@ -64,7 +66,10 @@ export default function Footer() {
 
           {/* Brand */}
           <div>
-            <span className="font-heading font-bold text-base text-brand-light">LeadarX Blog</span>
+            <div className="flex items-center gap-2">
+              <Image src="/logo-wordmark.png" alt="LeadarX" width={78} height={14} />
+              <span className="font-heading font-bold text-base text-brand-light">Blog</span>
+            </div>
             <p className="text-brand-grey text-sm mt-1">Nigeria's tech career and news hub.</p>
           </div>
 
