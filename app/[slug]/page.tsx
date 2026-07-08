@@ -52,13 +52,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           ? [{ url: post.og_image, width: 1200, height: 630 }]
           : post.featured_image
           ? [{ url: post.featured_image, width: 1200, height: 630, alt: post.featured_image_alt ?? post.title }]
-          : [],
+          : [{ url: `${SITE}/og-default.png`, width: 1200, height: 630, alt: 'LeadarX' }],
       },
       twitter: {
         card: 'summary_large_image',
         title: post.meta_title || post.title,
         description: post.meta_description || post.excerpt || '',
-        images: post.og_image ? [post.og_image] : post.featured_image ? [post.featured_image] : [],
+        images: [post.og_image || post.featured_image || `${SITE}/og-default.png`],
       },
     };
   } catch {

@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     locale: 'en_NG',
     url: SITE_URL,
     siteName: 'LeadarX Blog',
-    images: [{ url: '/og-default.jpg', width: 1200, height: 630, alt: 'LeadarX Blog' }],
+    images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'LeadarX Blog' }],
   },
   twitter: {
     card: 'summary_large_image',
