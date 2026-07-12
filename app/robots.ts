@@ -11,7 +11,11 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/api/', '/admin/'],
       },
     ],
-    sitemap: `${SITE}/sitemap.xml`,
+    sitemap: [
+      `${SITE}/sitemap.xml`,
+      'https://learn.leadarx.com/sitemap.xml',
+      'https://leadarx.com/sitemap.xml',
+    ],
     host: SITE,
   };
 }
