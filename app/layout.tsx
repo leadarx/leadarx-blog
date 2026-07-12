@@ -71,6 +71,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${inter.variable} ${jakarta.variable} ${mono.variable}`} data-theme="dark" suppressHydrationWarning>
       <head>
+        {/* Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBMHXFH161" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-KBMHXFH161');`,
+          }}
+        />
         {/* Anti-flash: read theme from localStorage before React hydrates */}
         <script
           dangerouslySetInnerHTML={{
