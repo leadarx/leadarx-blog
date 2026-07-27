@@ -4,6 +4,7 @@ const nextConfig = {
     remotePatterns: [
       { protocol: 'https', hostname: 'leadarx.com' },
       { protocol: 'https', hostname: '*.leadarx.com' },
+      { protocol: 'https', hostname: 's3.us-east-005.backblazeb2.com' },
     ],
   },
   async headers() {
