@@ -18,6 +18,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `#${tag} Articles`,
     description: `Browse all articles tagged with ${tag} on the LeadarX Blog.`,
+    // Tag pages overlap heavily with category pages and often have very few
+    // posts each -- kept crawlable so link equity flows through, but not
+    // indexed, since categories are the canonical grouping taxonomy.
+    robots: { index: false, follow: true },
   };
 }
 

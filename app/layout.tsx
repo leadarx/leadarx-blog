@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'LeadarX Academy' }],
   creator: 'LeadarX Academy',
-  publisher: 'LeadarX Academy',
+  publisher: 'LeadarX Limited',
   robots: {
     index: true,
     follow: true,

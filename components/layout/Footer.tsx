@@ -91,7 +91,7 @@ export default function Footer() {
         </div>
 
         <p className="text-brand-grey text-xs mt-8">
-          &copy; {new Date().getFullYear()} LeadarX Academy. All rights reserved.
+          &copy; {new Date().getFullYear()} LeadarX Academy, a service of LeadarX Limited (RC: 9719635). All rights reserved.
         </p>
       </div>
     </footer>
