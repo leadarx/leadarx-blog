@@ -1,5 +1,11 @@
 import Image from 'next/image';
 
+const NETWORK = [
+  { label: 'Academy', href: 'https://leadarx.com' },
+  { label: 'Hire a Team', href: 'https://hire.leadarx.com' },
+  { label: 'Student Login', href: 'https://learn.leadarx.com' },
+];
+
 const SOCIALS = [
   {
     label: 'WhatsApp',
@@ -72,6 +78,19 @@ export default function Footer() {
             </div>
             <p className="text-brand-grey text-sm mt-1">Nigeria's tech career and news hub.</p>
           </div>
+
+          {/* The rest of the LeadarX network */}
+          <nav className="flex flex-wrap items-center gap-x-6 gap-y-2" aria-label="LeadarX network">
+            {NETWORK.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className="text-brand-grey hover:text-brand-light text-sm transition-colors duration-150"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
 
           {/* Social icons */}
           <nav className="flex items-center gap-4" aria-label="Social media links">

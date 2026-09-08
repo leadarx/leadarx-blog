@@ -8,6 +8,7 @@ import CategoryBadge from '@/components/blog/CategoryBadge';
 import TagList from '@/components/blog/TagList';
 import RelatedPosts from '@/components/blog/RelatedPosts';
 import EnrollmentCTA from '@/components/blog/EnrollmentCTA';
+import HirePromo from '@/components/blog/HirePromo';
 import TableOfContents from '@/components/blog/TableOfContents';
 import ShareButtons from '@/components/blog/ShareButtons';
 import ReadingProgress from '@/components/blog/ReadingProgress';
@@ -249,6 +250,10 @@ export default async function PostPage({ params }: Props) {
               ) : (
                 <p className="text-brand-grey italic">No content available.</p>
               )}
+
+              {/* The sidebar is desktop-only, so the hire promo needs a place
+                  in the flow where a phone reader will actually meet it. */}
+              <HirePromo categorySlug={post.category?.slug ?? null} variant="inline" />
             </div>
 
             {/* Author bio */}
@@ -310,6 +315,9 @@ export default async function PostPage({ params }: Props) {
 
               {/* Enrollment CTA */}
               <EnrollmentCTA variant="sidebar" categoryColor={post.category?.color ?? undefined} />
+
+              {/* Hire CTA: the other half of the audience */}
+              <HirePromo categorySlug={post.category?.slug ?? null} variant="sidebar" />
 
               {/* Divider */}
               <div className="border-t border-brand-border" />

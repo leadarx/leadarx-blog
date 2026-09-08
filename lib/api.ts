@@ -102,3 +102,35 @@ export async function getRssPosts(): Promise<PostCard[]> {
   const res = await apiFetch<{ data: PostCard[] }>('/blog/rss', { next: { revalidate: 3600 } });
   return res.data ?? [];
 }
+
+// ── Courses ───────────────────────────────────────────────────────────────────
+
+export interface ActiveCourse {
+  slug: string;
+  name: string;
+}
+
+/**
+ * The courses actually running, from the admin API, which returns only rows
+ * with is_active = true. The adverts on this site are built from this rather
+ * than a hardcoded list, so retiring a course in the panel retires it here too.
+ *
+ * A failure returns an empty list rather than throwing: an advert is not worth
+ * taking the blog down for, and every caller renders sensibly without one.
+ */
+export async function getActiveCourses(): Promise<ActiveCourse[]> {
+  try {
+    const res = await fetch(`${API}/public/courses`, {
+      headers: { Accept: 'application/json' },
+      next: { revalidate: 300 },
+    });
+
+    if (!res.ok) return [];
+
+    const body = (await res.json()) as { data?: ActiveCourse[] };
+
+    return (body.data ?? []).map((c) => ({ slug: c.slug, name: c.name }));
+  } catch {
+    return [];
+  }
+}
