@@ -1,5 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    // Build renders category/post pages in parallel and each hits the Laravel API;
+    // the default of 8 at once trips the shared host's MySQL connection limit.
+    staticGenerationMaxConcurrency: 2,
+  },
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'leadarx.com' },
